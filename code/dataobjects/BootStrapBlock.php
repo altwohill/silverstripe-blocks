@@ -3,13 +3,12 @@
 /**
  * BootStrapBlocks are very similar to Blocks, but they live inside BootStrapRows
  */
-class BootStrapBlock extends DataObject{
+class BootStrapBlock extends Block{
 
 	private static $singular_name = 'Block';
 	private static $plural_name = 'Blocks';
 
 	private static $db = array(
-		'Title' => 'Varchar(255)',
 		'ShowTitle' => 'Boolean',
 		'BootStrapColumnClass' => 'Varchar(20)',
 		'Content' => 'HTMLText'
