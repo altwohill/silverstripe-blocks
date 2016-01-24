@@ -10,6 +10,12 @@ class BootStrapSlideshowBlock extends BootStrapBlock {
     private static $has_many = array(
         'Slides' => 'BootStrapSlide',
     );
+
+    public function getCMSFields() {
+        $fields = parent::getCMSFields();
+        $fields->removeByName('Content');
+        return $fields;
+    }
 }
 
 class BootStrapSlide extends DataObject {
@@ -18,7 +24,8 @@ class BootStrapSlide extends DataObject {
     );
     private static $has_one = array(
         'Link' => 'Link',
-        'Image' => 'Image'
+        'Image' => 'Image',
+        'Slideshow' => 'BootStrapSlideshowBlock',
     );
 
     private static $summary_fields = array (
@@ -31,6 +38,7 @@ class BootStrapSlide extends DataObject {
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         $fields->removeByName('SortID');
+        $fields->replaceField('LinkID', LinkField::create('LinkID', 'Link'));
         return $fields;
     }
 }
