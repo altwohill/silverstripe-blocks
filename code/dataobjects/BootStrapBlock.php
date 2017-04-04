@@ -12,7 +12,8 @@ class BootStrapBlock extends DataObject{
 		'Title' => 'Varchar(255)',
 		'ShowTitle' => 'Boolean',
 		'BootStrapColumnClass' => 'Varchar(20)',
-		'Content' => 'HTMLText'
+		'Content' => 'HTMLText',
+        'Sort' => 'Int'
 	);
 
 	private static $has_one = array(
@@ -25,7 +26,10 @@ class BootStrapBlock extends DataObject{
 		'BootStrapColumnClass' => 'Column Spec'
 	);
 
-	public function getCSSClass() {
+    private static $default_sort = array('Sort' => 'ASC');
+
+
+    public function getCSSClass() {
 		$filter = URLSegmentFilter::create();
 		return $filter->filter($this->Title);
 	}
