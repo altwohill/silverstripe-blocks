@@ -53,8 +53,10 @@ class BootStrapRow extends Block{
 			$multiClass = new GridFieldAddNewMultiClass();
 			$classes = $this->getBootStrapBlockClasses();
 			$multiClass->setClasses($classes);
-			$config->addComponent($multiClass);
-		}
+			$config->addComponent($multiClass)->addComponent(new GridFieldOrderableRows());
+
+        }
+
 
 		return $fields;
 
