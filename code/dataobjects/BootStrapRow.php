@@ -54,6 +54,7 @@ class BootStrapRow extends Block{
 			$classes = $this->getBootStrapBlockClasses();
 			$multiClass->setClasses($classes);
 			$config->addComponent($multiClass);
+			$config->addComponent(new GridFieldSortableRows('SortID'));
 		}
 
 		return $fields;
