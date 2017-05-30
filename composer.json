@@ -19,7 +19,8 @@
 		"silverstripe-australia/gridfieldextensions": "~1.0",
 		"silverstripe/multivaluefield": "~2.0",
 		"unclecheese/betterbuttons": "~1.2",
-		"sheadawson/silverstripe-linkable": "*"
+		"sheadawson/silverstripe-linkable": "*",
+		"undefinedoffset/sortablegridfield": "*"
 	},
 	"suggest": {
 		"unisolutions/silverstripe-copybutton": "Duplicate Blocks in Block Admin",
