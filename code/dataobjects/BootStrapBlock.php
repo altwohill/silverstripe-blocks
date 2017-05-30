@@ -11,12 +11,15 @@ class BootStrapBlock extends Block{
 	private static $db = array(
 		'ShowTitle' => 'Boolean',
 		'BootStrapColumnClass' => 'Varchar(20)',
-		'Content' => 'HTMLText'
+		'Content' => 'HTMLText',
+		'SortID' => 'Int',
 	);
 
 	private static $has_one = array(
 		'BootStrapRow' => 'BootStrapRow'
 	);
+	
+	private static $default_sort = 'SortID';
 
 	private static $summary_fields = array(
 		'singular_name' => 'Block Type',
