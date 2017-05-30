@@ -28,7 +28,7 @@ class BootStrapRow extends Block{
 	 * @return array
 	 */
 	public function getBootStrapBlockClasses(){
-		$classes = ArrayLib::valuekey(ClassInfo::subclassesFor('Block'));
+		$classes = ArrayLib::valuekey(ClassInfo::subclassesFor('BootStrapBlock'));
 
 		foreach ($classes as $k => $v) {
 			$classes[$k] = singleton($k)->singular_name();
