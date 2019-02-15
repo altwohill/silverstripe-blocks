@@ -14,6 +14,9 @@ class BootStrapSlideshowBlock extends BootStrapBlock {
     public function getCMSFields() {
         $fields = parent::getCMSFields();
         $fields->removeByName('Content');
+        $slideField = $fields->dataFieldByName('Slides');
+        $config = $slideField->getConfig();
+        $config->addComponent(new GridFieldSortableRows(('SortID')));
         return $fields;
     }
 }
