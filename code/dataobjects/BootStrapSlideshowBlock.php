@@ -19,6 +19,10 @@ class BootStrapSlideshowBlock extends BootStrapBlock {
         $config->addComponent(new GridFieldSortableRows(('SortID')));
         return $fields;
     }
+
+    public function getSlides() {
+        return $this->Slides()->sort('SortID');
+    }
 }
 
 class BootStrapSlide extends DataObject {
