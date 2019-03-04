@@ -22,6 +22,7 @@ use SilverStripe\ORM\DB;
 use SilverStripe\Core\ClassInfo;
 use Exception;
 use SilverStripe\Core\Injector\Injector;
+use Twohill\Legacy\BlockManager;
 
 
 /**
@@ -95,7 +96,7 @@ class Block extends DataObject implements PermissionProvider{
 
 		// this line is a temporary patch until I can work out why this dependency isn't being
 		// loaded in some cases...
-		if(!$this->blockManager) $this->blockManager = singleton('BlockManager');
+		if(!$this->blockManager) $this->blockManager = singleton(BlockManager::class);
 
 		$fields = parent::getCMSFields();
 

@@ -116,7 +116,7 @@ class BlockManager {
 			$classes[$k] = singleton($k)->singular_name();
 		}
 
-		if(!Config::inst()->get('BlockManager', 'use_default_blocks')){
+		if(!Config::inst()->get(BlockManager::class, 'use_default_blocks')){
 			unset($classes['ContentBlock']);
 		}
 

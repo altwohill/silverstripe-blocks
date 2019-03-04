@@ -7,6 +7,7 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Control\Controller;
 use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
 use SilverStripe\Forms\DropdownField;
+use Twohill\Legacy\BlockManager;
 use Twohill\Legacy\dataobjects\BlockSet;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldButtonRow;
@@ -33,7 +34,7 @@ class GridFieldConfig_BlockManager extends GridFieldConfig{
 	public function __construct($canAdd = true, $canEdit = true, $canDelete = true, $editableRows = false, $aboveOrBelow = false) {
 		parent::__construct();
 
-		$this->blockManager = Injector::inst()->get('BlockManager');
+		$this->blockManager = Injector::inst()->get(BlockManager::class);
 		$controllerClass = Controller::curr()->class;
 		// Get available Areas (for page) or all in case of ModelAdmin
 		if($controllerClass == 'CMSPageEditController'){
