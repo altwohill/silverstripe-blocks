@@ -1,14 +1,14 @@
 ---
 Name: 'blocks'
 ---
-SiteTree:
+SilverStripe\CMS\Model\SiteTree:
   extensions:
-    - BlocksSiteTreeExtension
+    - Twohill\Legacy\extensions\BlocksSiteTreeExtension
 SilverStripe\CMS\Controllers\ContentController:
   extensions:
-    - BlocksContentControllerExtension
+    - Twohill\Legacy\extensions\BlocksContentControllerExtension
   url_handlers:
     'block/$ID!': 'handleBlock'
 SilverStripe\SiteConfig\SiteConfig:
   extensions:
-    - BlockSiteConfigExtension
+    - Twohill\Legacy\extensions\BlockSiteConfigExtension
