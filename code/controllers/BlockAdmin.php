@@ -5,6 +5,7 @@ namespace Twohill\Legacy\controllers;
 
 use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\Versioned\Versioned;
+use Twohill\Legacy\BlockManager;
 use Twohill\Legacy\dataobjects\Block;
 use Twohill\Legacy\dataobjects\BlockSet;
 use Twohill\Legacy\forms\GridFieldConfig_BlockManager;
@@ -28,7 +29,7 @@ class BlockAdmin extends ModelAdmin
     public $showImportForm = false;
 
     private static $dependencies = array(
-        'blockManager' => '%$blockManager',
+        'blockManager' => '%$' . BlockManager::class,
     );
 
     public $blockManager;

@@ -6,6 +6,7 @@ use SilverStripe\CMS\Model\SiteTreeExtension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Security\Permission;
 use SilverStripe\Forms\LiteralField;
+use Twohill\Legacy\BlockManager;
 use Twohill\Legacy\dataobjects\Block;
 use Twohill\Legacy\GridFieldConfig_BlockManager;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
@@ -41,9 +42,9 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 	private static $defaults = array(
 		'InheritBlockSets' => 1
 	);
-	private static $dependencies = array(
-		'blockManager' => '%$blockManager',
-	);
+    private static $dependencies = [
+        'blockManager' => '%$' . BlockManager::class,
+    ];
 	public $blockManager;
 
 
