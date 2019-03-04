@@ -7,7 +7,7 @@ use SilverStripe\Admin\ModelAdmin;
 use SilverStripe\Versioned\Versioned;
 use Twohill\Legacy\dataobjects\Block;
 use Twohill\Legacy\dataobjects\BlockSet;
-use Twohill\Legacy\GridFieldConfig_BlockManager;
+use Twohill\Legacy\forms\GridFieldConfig_BlockManager;
 
 
 /**
@@ -23,6 +23,7 @@ class BlockAdmin extends ModelAdmin
     private static $url_segment = 'block-admin';
 
     private static $menu_title = "Blocks";
+    private static $menu_icon = 'sheadawson/silverstripe-blocks: images/blocks.png';
 
     public $showImportForm = false;
 
