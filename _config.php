@@ -1,6 +1,6 @@
 <?php
 //define global path to Components' root folder
-if(!defined('BLOCKS_DIR')) define('BLOCKS_DIR', rtrim(basename(dirname(__FILE__))));
+use SilverStripe\Core\Config\Config;
 
-Config::inst()->update('LeftAndMain','extra_requirements_javascript', array(BLOCKS_DIR . '/javascript/blocks-cms.js'));
-Config::inst()->update('BlockAdmin','menu_icon', BLOCKS_DIR . '/images/blocks.png');
+Config::inst()->update('LeftAndMain','extra_requirements_javascript', array("sheadawson/silverstripe-blocks: javascript/blocks-cms.js"));
+Config::inst()->update('BlockAdmin','menu_icon', 'sheadawson/silverstripe-blocks: images/blocks.png');

@@ -279,7 +279,7 @@ class Block extends DataObject implements PermissionProvider{
 		return Permission::check('ADMIN') || Permission::check('BLOCK_DELETE');
 	}
 
-	public function canCreate($member = null) {
+	public function canCreate($member = null, $context = []) {
 		return Permission::check('ADMIN') || Permission::check('BLOCK_CREATE');
 	}
 
