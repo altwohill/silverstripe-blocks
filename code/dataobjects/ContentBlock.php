@@ -1,12 +1,18 @@
 <?php
-	
-class ContentBlock extends Block{
 
-	private static $singular_name = 'Content Block';
-	private static $plural_name = 'Content Blocks';
+namespace Twohill\Legacy\dataobjects;
 
-	private static $db = array(
-		'Content' => 'HTMLText'
-	);
+
+class ContentBlock extends Block
+{
+
+    private static $singular_name = 'Content Block';
+    private static $plural_name = 'Content Blocks';
+
+    private static $table_name = 'ContentBlock';
+
+    private static $db = array(
+        'Content' => 'HTMLText'
+    );
 }
-	
+

@@ -1,11 +1,19 @@
 <?php
+
+namespace Twohill\Legacy\controllers;
+
+
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
+
+
 /**
  * Block_Controller
  * @package silverstipe blocks
  * @author Shea Dawson <shea@silverstripe.com.au>
  */
 class Block_Controller extends Controller{
-	
+
 	/**
 	 * @var Block
 	 */
@@ -20,7 +28,7 @@ class Block_Controller extends Controller{
 			$this->block = $block;
 			$this->failover = $block;
 		}
-		
+
 		parent::__construct();
 	}
 
@@ -37,11 +45,11 @@ class Block_Controller extends Controller{
 	public function Link($action = null) {
 		$id = ($this->block) ? $this->block->ID : null;
 		$segment = Controller::join_links('block', $id, $action);
-		
+
 		if($page = Director::get_current_page()) {
 			return $page->Link($segment);
-		} 
-		
+		}
+
 		return Controller::curr()->Link($segment);
 	}
 

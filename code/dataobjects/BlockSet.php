@@ -1,11 +1,29 @@
 <?php
+
+namespace Twohill\Legacy\dataobjects;
+
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\PermissionProvider;
+use SilverStripe\Forms\HeaderField;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
+use Symbiote\MultiValueField\Fields\MultiValueCheckboxField;
+use SilverStripe\Forms\TreeMultiselectField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\LiteralField;
+use Twohill\Legacy\GridFieldConfig_BlockManager;
+use SilverStripe\ORM\ArrayLib;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Security\Permission;
+
 /**
  * BlockSet
  * @package silverstipe blocks
  * @author Shea Dawson <shea@silverstripe.com.au>
  */
 class BlockSet extends DataObject implements PermissionProvider{
-	
+
+    private static $table_name = "BlockSet";
 	/**
 	 * @var array
 	 **/
@@ -19,10 +37,10 @@ class BlockSet extends DataObject implements PermissionProvider{
 	 * @var array
 	 **/
 	private static $many_many = array(
-		'Blocks' => 'Block',
-		'PageParents' => 'SiteTree'
+		'Blocks' => Block::class,
+		'PageParents' => SiteTree::class
 	);
-	
+
 	/**
 	 * @var array
 	 **/
@@ -90,10 +108,10 @@ class BlockSet extends DataObject implements PermissionProvider{
 		asort($pageTypes);
 		return $pageTypes;
 	}
-	
-	
+
+
 	/**
-	 * Returns a list of pages this BlockSet features on 
+	 * Returns a list of pages this BlockSet features on
 	 * @return DataList
 	 */
 	public function Pages(){

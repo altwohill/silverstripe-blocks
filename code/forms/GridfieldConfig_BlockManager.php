@@ -1,4 +1,25 @@
 <?php
+
+namespace Twohill\Legacy\forms;
+
+use SilverStripe\Forms\GridField\GridFieldConfig;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Control\Controller;
+use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
+use SilverStripe\Forms\DropdownField;
+use Twohill\Legacy\dataobjects\BlockSet;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridFieldButtonRow;
+use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
+use SilverStripe\Forms\GridField\GridFieldDetailForm;
+use SilverStripe\Forms\GridField\GridFieldSortableHeader;
+use SilverStripe\Forms\GridField\GridFieldFilterHeader;
+use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
+use SilverStripe\Forms\GridField\GridFieldEditButton;
+use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use Symbiote\GridFieldExtensions\GridFieldAddExistingSearchButton;
+use Twohill\Legacy\dataobjects\Block;
+
 /**
  * GridFieldConfig_BlockManager
  * Provides a reusable GridFieldConfig for managing Blocks
@@ -91,7 +112,6 @@ class GridFieldConfig_BlockManager extends GridFieldConfig{
 		}
 
 		if($controllerClass == 'BlockAdmin' && class_exists('GridFieldCopyButton')){
-			$this->addComponent(new GridFieldCopyButton());
 			$this->addComponent(new GridFieldDeleteAction());
 		}
 
@@ -110,14 +130,5 @@ class GridFieldConfig_BlockManager extends GridFieldConfig{
 		return $this;
 	}
 
-	/**
-	 * Add the GridFieldBulkManager component to this grid config
-	 * @return $this
-	 **/
-	public function addBulkEditing(){
-		if(class_exists('GridFieldBulkManager')){
-			$this->addComponent(new GridFieldBulkManager());
-		}
-		return $this;
-	}
+
 }

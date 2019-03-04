@@ -1,5 +1,12 @@
 <?php
 
+namespace Twohill\Legacy\dataobjects;
+
+use SilverStripe\ORM\DataObject;
+use SilverStripe\View\Parsers\URLSegmentFilter;
+use SilverStripe\Core\ClassInfo;
+
+
 /**
  * BootStrapBlocks are very similar to Blocks, but they live inside BootStrapRows
  */
@@ -7,6 +14,8 @@ class BootStrapBlock extends DataObject{
 
 	private static $singular_name = 'Block';
 	private static $plural_name = 'Blocks';
+
+	private static $table_name = "BootStrapBlock";
 
 	private static $db = array(
 		'Title' => 'Varchar(255)',
@@ -17,7 +26,7 @@ class BootStrapBlock extends DataObject{
 	);
 
 	private static $has_one = array(
-		'BootStrapRow' => 'BootStrapRow'
+		'BootStrapRow' => BootStrapRow::class,
 	);
 
 	private static $summary_fields = array(

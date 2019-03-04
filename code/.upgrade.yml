@@ -1,0 +1,18 @@
+mappings:
+  BlockManager: Twohill\Legacy\BlockManager
+  BlockAdmin: Twohill\Legacy\controllers\BlockAdmin
+  Block_Controller: Twohill\Legacy\controllers\Block_Controller
+  Block: Twohill\Legacy\dataobjects\Block
+  BlockSet: Twohill\Legacy\dataobjects\BlockSet
+  BootStrapBlock: Twohill\Legacy\dataobjects\BootStrapBlock
+  BootStrapBlogWidget: Twohill\Legacy\dataobjects\BootStrapBlogWidget
+  BootStrapContentTile: Twohill\Legacy\dataobjects\BootStrapContentTile
+  BootStrapIFrame: Twohill\Legacy\dataobjects\BootStrapIFrame
+  BootStrapRow: Twohill\Legacy\dataobjects\BootStrapRow
+  BootStrapSummaryBlock: Twohill\Legacy\dataobjects\BootStrapSummaryBlock
+  ContentBlock: Twohill\Legacy\dataobjects\ContentBlock
+  BlocksContentControllerExtension: Twohill\Legacy\extensions\BlocksContentControllerExtension
+  BlockSiteConfigExtension: Twohill\Legacy\extensions\BlockSiteConfigExtension
+  BlocksSiteTreeExtension: Twohill\Legacy\extensions\BlocksSiteTreeExtension
+  GridFieldConfig_BlockManager: Twohill\Legacy\forms\GridFieldConfig_BlockManager
+  BlockUpgradeTask: Twohill\Legacy\tasks\BlockUpgradeTask

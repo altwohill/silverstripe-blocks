@@ -1,0 +1,11 @@
+SilverStripe\ORM\DatabaseAdmin:
+  classname_value_remapping:
+    Block: Twohill\Legacy\dataobjects\Block
+    BlockSet: Twohill\Legacy\dataobjects\BlockSet
+    BootStrapBlock: Twohill\Legacy\dataobjects\BootStrapBlock
+    BootStrapBlogWidget: Twohill\Legacy\dataobjects\BootStrapBlogWidget
+    BootStrapContentTile: Twohill\Legacy\dataobjects\BootStrapContentTile
+    BootStrapIFrame: Twohill\Legacy\dataobjects\BootStrapIFrame
+    BootStrapRow: Twohill\Legacy\dataobjects\BootStrapRow
+    BootStrapSummaryBlock: Twohill\Legacy\dataobjects\BootStrapSummaryBlock
+    ContentBlock: Twohill\Legacy\dataobjects\ContentBlock

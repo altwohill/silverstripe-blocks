@@ -1,60 +1,71 @@
 <?php
+
+namespace Twohill\Legacy\controllers;
+
+
+use SilverStripe\Admin\ModelAdmin;
+use SilverStripe\Versioned\Versioned;
+use Twohill\Legacy\dataobjects\Block;
+use Twohill\Legacy\dataobjects\BlockSet;
+use Twohill\Legacy\GridFieldConfig_BlockManager;
+
+
 /**
  * BlockAdmin
  * @package silverstipe blocks
  * @author Shea Dawson <shea@silverstripe.com.au>
  */
-class BlockAdmin extends ModelAdmin {
-   
-    private static $managed_models = array(
-    	'Block',
-    	'BlockSet'
+class BlockAdmin extends ModelAdmin
+{
+
+    private static $managed_models = [Block::class, BlockSet::class];
+
+    private static $url_segment = 'block-admin';
+
+    private static $menu_title = "Blocks";
+
+    public $showImportForm = false;
+
+    private static $dependencies = array(
+        'blockManager' => '%$blockManager',
     );
-	
-	private static $url_segment = 'block-admin';
-	
-	private static $menu_title = "Blocks";
-	
-	public $showImportForm = false;
-	
-	private static $dependencies = array(
-		'blockManager' => '%$blockManager',
-	);
-	
-	public $blockManager;
 
-	
-	/**
-	 * @return array
-	 **/
-	public function getManagedModels() {
-		$models = parent::getManagedModels();
-		
-		// remove blocksets if not in use (set in config):
-		if(!$this->blockManager->getUseBlockSets()){
-			unset( $models['BlockSet'] );
-		}
-		
-		return $models;
-	}
+    public $blockManager;
 
 
-	/**
-	 * @return Form
-	 **/
-	public function getEditForm($id = null, $fields = null) {
-		Versioned::reading_stage('Stage');
-		$form = parent::getEditForm($id, $fields);	
+    /**
+     * @return array
+     **/
+    public function getManagedModels()
+    {
+        $models = parent::getManagedModels();
 
-		if($blockGridField = $form->Fields()->fieldByName('Block')){
-			$blockGridField->setConfig(GridFieldConfig_BlockManager::create(true, true, false));
-			$config = $blockGridField->getConfig();
-			$dcols = $config->getComponentByType('GridFieldDataColumns');
-			$dfields = $dcols->getDisplayFields($blockGridField);
-			unset($dfields['BlockArea']);
-			$dcols->setDisplayFields($dfields);
-		}
+        // remove blocksets if not in use (set in config):
+        if (!$this->blockManager->getUseBlockSets()) {
+            unset($models['BlockSet']);
+        }
 
-		return $form;
-	}
+        return $models;
+    }
+
+
+    /**
+     * @return Form
+     **/
+    public function getEditForm($id = null, $fields = null)
+    {
+        Versioned::reading_stage('Stage');
+        $form = parent::getEditForm($id, $fields);
+
+        if ($blockGridField = $form->Fields()->fieldByName('Block')) {
+            $blockGridField->setConfig(GridFieldConfig_BlockManager::create(true, true, false));
+            $config = $blockGridField->getConfig();
+            $dcols = $config->getComponentByType('GridFieldDataColumns');
+            $dfields = $dcols->getDisplayFields($blockGridField);
+            unset($dfields['BlockArea']);
+            $dcols->setDisplayFields($dfields);
+        }
+
+        return $form;
+    }
 }

@@ -1,4 +1,29 @@
 <?php
+
+namespace Twohill\Legacy\dataobjects;
+
+
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBBoolean;
+use SilverStripe\Security\PermissionProvider;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Control\Controller;
+use SilverStripe\Security\Group;
+use SilverStripe\Forms\OptionsetField;
+use SilverStripe\Forms\ListboxField;
+use SilverStripe\Forms\RequiredFields;
+use SilverStripe\View\SSViewer;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\Security\Member;
+use SilverStripe\Security\Permission;
+use SilverStripe\ORM\DB;
+use SilverStripe\Core\ClassInfo;
+use Exception;
+use SilverStripe\Core\Injector\Injector;
+
+
 /**
  * Block
  * Subclass this basic Block with your more interesting ones
@@ -7,6 +32,7 @@
  */
 class Block extends DataObject implements PermissionProvider{
 
+    private static $table_name = "Block";
 	/**
 	 * @var array
 	 */
@@ -15,7 +41,6 @@ class Block extends DataObject implements PermissionProvider{
 		"CanViewType" => "Enum('Anyone, LoggedInUsers, OnlyTheseUsers', 'Anyone')",
 		'ExtraCSSClasses' => 'Varchar',
 		// these are legacy fields, in place to make migrations from old blocks version easier
-		'Title' => 'Varchar(255)',
 		'Weight' => 'Int',
 		'Area' => 'Varchar',
 		'Published' => 'Boolean',
@@ -25,15 +50,15 @@ class Block extends DataObject implements PermissionProvider{
 	 * @var array
 	 */
 	private static $many_many = array(
-		"ViewerGroups" => "Group"
+		"ViewerGroups" => Group::class,
 	);
 
 	/**
 	 * @var array
 	 */
 	private static $belongs_many_many = array(
-		'Pages' => 'SiteTree',
-		'BlockSets' => 'BlockSet'
+		'Pages' => SiteTree::class,
+		'BlockSets' => BlockSet::class
 	);
 
 	private static $summary_fields = array(
@@ -330,7 +355,7 @@ class Block extends DataObject implements PermissionProvider{
 	 * @return boolean True if this page has been published.
 	 */
 	public function isPublishedNice() {
-		$field = Boolean::create('isPublished');
+		$field = DBBoolean::create('isPublished');
 		$field->setValue($this->isPublished());
 		return $field->Nice();
 	}

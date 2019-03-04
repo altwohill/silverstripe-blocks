@@ -1,17 +1,28 @@
 <?php
 
+namespace Twohill\Legacy\dataobjects;
+
+use SilverStripe\View\Parsers\URLSegmentFilter;
+use SilverStripe\ORM\ArrayLib;
+use SilverStripe\Core\ClassInfo;
+use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
+
+
 /**
  * A BootStrap Row is a container block that holds other blocks inside it.
  * It translates into a BootStrap row div holding many columns
  */
 class BootStrapRow extends Block{
 
+    private static $table_name = "BootStrapRow";
+
 	private static $db = array(
 		'ShowDivider' => 'Boolean',
 	);
 
 	private static $has_many = array(
-		'BootStrapBlocks' => 'BootStrapBlock',
+		'BootStrapBlocks' => BootStrapBlock::class,
 	);
 
 	/**

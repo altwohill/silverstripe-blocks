@@ -1,4 +1,23 @@
 <?php
+
+namespace Twohill\Legacy\extensions;
+
+use SilverStripe\CMS\Model\SiteTreeExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Security\Permission;
+use SilverStripe\Forms\LiteralField;
+use Twohill\Legacy\dataobjects\Block;
+use Twohill\Legacy\GridFieldConfig_BlockManager;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\ListboxField;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\View\SSViewer;
+use SilverStripe\ORM\ArrayList;
+use Twohill\Legacy\dataobjects\BlockSet;
+use SilverStripe\Control\Controller;
+
 /**
  * BlocksSiteTreeExtension
  * @package silverstipe blocks
@@ -10,8 +29,8 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 		'InheritBlockSets' => 'Boolean'
 	);
 	private static $many_many = array(
-		'Blocks' => 'Block',
-		'DisabledBlocks' => 'Block'
+		'Blocks' => Block::class,
+		'DisabledBlocks' => Block::class,
 	);
 	public static $many_many_extraFields = array(
 		'Blocks' => array(
@@ -26,16 +45,17 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 		'blockManager' => '%$blockManager',
 	);
 	public $blockManager;
-	
 
-	/**
-	 * Block manager for Pages
-	 * */
+
+    /**
+     * Block manager for Pages
+     * @param FieldList $fields
+     */
 	public function updateCMSFields(FieldList $fields) {
 		if($fields->fieldByName('Root.Blocks') || in_array($this->owner->ClassName, $this->blockManager->getExcludeFromPageTypes()) || !$this->owner->exists()){
 			return;
 		}
-		
+
 		if(!Permission::check('BLOCK_EDIT')) {
 			return;
 		}
@@ -43,10 +63,10 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 		$areas = $this->blockManager->getAreasForPageType($this->owner->ClassName);
 
 		if ($areas && count($areas)) {
-			$fields->addFieldToTab('Root.Blocks', 
+			$fields->addFieldToTab('Root.Blocks',
 					LiteralField::create('PreviewLink', $this->areasPreviewButton()));
 
-			// Blocks related directly to this Page 
+			// Blocks related directly to this Page
 			$gridConfig = GridFieldConfig_BlockManager::create(true, true, true, true)
 				->addExisting($this->owner->class)
 				//->addBulkEditing()
@@ -57,7 +77,7 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 			$gridSource = $this->owner->Blocks();
 				// ->sort(array(
 				// 	"FIELD(SiteTree_Blocks.BlockArea, '" . implode("','", array_keys($areas)) . "')" => '',
-				// 	'SiteTree_Blocks.Sort' => 'ASC', 
+				// 	'SiteTree_Blocks.Sort' => 'ASC',
 				// 	'Name' => 'ASC'
 				// ));
 
@@ -67,33 +87,33 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 			// Blocks inherited from BlockSets
 			if ($this->blockManager->getUseBlockSets()) {
 				$inheritedBlocks = $this->getBlocksFromAppliedBlockSets(null, true);
-			
+
 				if ($inheritedBlocks->count()) {
 					$activeInherited = $this->getBlocksFromAppliedBlockSets(null, false);
 
 					if ($activeInherited->count()) {
 						$fields->addFieldsToTab('Root.Blocks', array(
-							GridField::create('InheritedBlockList', 'Blocks Inherited from Block Sets', $activeInherited, 
+							GridField::create('InheritedBlockList', 'Blocks Inherited from Block Sets', $activeInherited,
 								GridFieldConfig_BlockManager::create(false, false, false)),
 							LiteralField::create('InheritedBlockListTip', "<p class='message'>Tip: Inherited blocks can be edited in the <a href='admin/block-admin'>Block Admin area</a><p>")
 						));
 					}
 
-					$fields->addFieldToTab('Root.Blocks', 
-							ListBoxField::create('DisabledBlocks', 'Disable Inherited Blocks', 
+					$fields->addFieldToTab('Root.Blocks',
+							ListBoxField::create('DisabledBlocks', 'Disable Inherited Blocks',
 									$inheritedBlocks->map('ID', 'Title'), null, null, true)
 									->setDescription('Select any inherited blocks that you would not like displayed on this page.')
 					);
 				} else {
-					$fields->addFieldToTab('Root.Blocks', 
-							ReadonlyField::create('DisabledBlocksReadOnly', 'Disable Inherited Blocks', 
+					$fields->addFieldToTab('Root.Blocks',
+							ReadonlyField::create('DisabledBlocksReadOnly', 'Disable Inherited Blocks',
 									'This page has no inherited blocks to disable.'));
 				}
 
-				$fields->addFieldToTab('Root.Blocks', 
+				$fields->addFieldToTab('Root.Blocks',
 					CheckboxField::create('InheritBlockSets', 'Inherit Blocks from Block Sets'));
 			}
-			
+
 		} else {
 			$fields->addFieldToTab('Root.Blocks', LiteralField::create('Blocks', 'This page type has no Block Areas configured.'));
 		}
@@ -135,8 +155,8 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 
 
 	/**
-	 * Get a merged list of all blocks on this page and ones inherited from BlockSets 
-	 * 
+	 * Get a merged list of all blocks on this page and ones inherited from BlockSets
+	 *
 	 * @param string|null $area filter by block area
 	 * @param boolean $includeDisabled Include blocks that have been explicitly excluded from this page
 	 * i.e. blocks from block sets added to the "disable inherited blocks" list
@@ -168,9 +188,9 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 						if($block->AboveOrBelow == 'Above'){
 							$blocks->unshift($block);
 						}else{
-							$blocks->push($block);	
+							$blocks->push($block);
 						}
-						
+
 					}
 				}
 			}
@@ -181,7 +201,7 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 
 
 	/**
-	 * Get Any BlockSets that apply to this page 
+	 * Get Any BlockSets that apply to this page
 	 * @return ArrayList
 	 * */
 	public function getAppliedSets() {
@@ -196,9 +216,9 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 		foreach ($sets as $set) {
 			$restrictedToParerentIDs = $set->PageParents()->column('ID');
 			if (count($restrictedToParerentIDs)) {
-				// check whether the set should include selected parent, in which case check whether 
-				// it was in the restricted parents list. If it's not, or if include parentpage 
-				// wasn't selected, we check the ancestors of this page. 
+				// check whether the set should include selected parent, in which case check whether
+				// it was in the restricted parents list. If it's not, or if include parentpage
+				// wasn't selected, we check the ancestors of this page.
 				if ($set->IncludePageParent && in_array($this->owner->ID, $restrictedToParerentIDs)) {
 					$list->add($set);
 				} else {
@@ -220,20 +240,20 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 
 
 	/**
-	 * Get all Blocks from BlockSets that apply to this page 
+	 * Get all Blocks from BlockSets that apply to this page
 	 * @return ArrayList
 	 * */
 	public function getBlocksFromAppliedBlockSets($area = null, $includeDisabled = false) {
 		$blocks = ArrayList::create();
 		$sets = $this->getAppliedSets();
-		
+
 		if(!$sets->count()){
 			return $blocks;
 		}
-		
+
 		foreach ($sets as $set) {
 			$setBlocks = $set->Blocks()->sort('Sort DESC');
-				
+
 			if (!$includeDisabled && $this->owner->DisabledBlocks()->count()) {
 				$setBlocks = $setBlocks->exclude('ID', $this->owner->DisabledBlocks()->column('ID'));
 			}
@@ -244,7 +264,7 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 
 			$blocks->merge($setBlocks);
 		}
-		
+
 		$blocks->removeDuplicates();
 
 		return $blocks;

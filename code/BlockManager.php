@@ -1,10 +1,19 @@
 <?php
+
+namespace Twohill\Legacy;
+
+use SilverStripe\ORM\ArrayLib;
+use SilverStripe\Forms\FormField;
+use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\SiteConfig\SiteConfig;
+
 /**
  * BlockManager
  * @package silverstipe blocks
  * @author Shea Dawson <shea@livesource.co.nz>
  */
-class BlockManager extends Object{
+class BlockManager {
 
 	/**
 	 * Define areas and config on a per theme basis
@@ -20,11 +29,7 @@ class BlockManager extends Object{
 	private static $use_default_blocks = true;
 
 
-	public function __construct(){
-		parent::__construct();
-	}
 
-	
 	/**
 	 * Gets an array of all areas defined for the current theme
 	 * @param string $theme
@@ -45,10 +50,10 @@ class BlockManager extends Object{
 		if(count($areas)){
 			foreach ($areas as $k => $v) {
 				$areas[$k] = $keyAsValue ? FormField::name_to_label($k) : $v;
-			}	
+			}
 		}
 		return $areas;
-		
+
 	}
 
 
@@ -92,7 +97,7 @@ class BlockManager extends Object{
 				}
 			}
 		}
-		
+
 		if(count($areas)){
 			foreach ($areas as $k => $v) {
 				$areas[$k] = FormField::name_to_label($k);
@@ -141,7 +146,7 @@ class BlockManager extends Object{
 		$config = $this->config()->get('themes');
 		return $theme && isset($config[$theme]) ? $config[$theme] : null;
 	}
-	
+
 	/*
 	 * Usage of BlockSets configurable from yaml
 	 */
