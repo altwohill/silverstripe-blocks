@@ -2,6 +2,7 @@
 
 namespace Twohill\Legacy;
 
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\ORM\ArrayLib;
 use SilverStripe\Forms\FormField;
 use SilverStripe\Core\ClassInfo;
@@ -14,6 +15,7 @@ use SilverStripe\SiteConfig\SiteConfig;
  * @author Shea Dawson <shea@livesource.co.nz>
  */
 class BlockManager {
+    use Configurable;
 
 	/**
 	 * Define areas and config on a per theme basis
