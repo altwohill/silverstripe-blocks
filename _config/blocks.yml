@@ -12,3 +12,6 @@ SilverStripe\CMS\Controllers\ContentController:
 SilverStripe\SiteConfig\SiteConfig:
   extensions:
     - Twohill\Legacy\extensions\BlockSiteConfigExtension
+Twohill\Legacy\dataobjects\Block:
+  extensions:
+    - SilverStripe\Versioned\Versioned
