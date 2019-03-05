@@ -5,9 +5,7 @@ namespace Twohill\Legacy\dataobjects;
 
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\FieldType\DBBoolean;
 use SilverStripe\Security\PermissionProvider;
-use SilverStripe\View\Requirements;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Control\Controller;
 use SilverStripe\Security\Group;
@@ -18,7 +16,6 @@ use SilverStripe\View\SSViewer;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
-use SilverStripe\ORM\DB;
 use SilverStripe\Core\ClassInfo;
 use Exception;
 use SilverStripe\Core\Injector\Injector;
@@ -33,6 +30,8 @@ use Twohill\Legacy\BlockManager;
  */
 class Block extends DataObject implements PermissionProvider
 {
+
+
 
     private static $table_name = "Block";
     /**
@@ -80,6 +79,10 @@ class Block extends DataObject implements PermissionProvider
     private static $dependencies = array(
         'blockManager' => '%$' . BlockManager::class,
     );
+
+    private static $extensions = [
+        Versioned::class,
+    ];
 
     /**
      * @var BlockManager
@@ -197,20 +200,14 @@ class Block extends DataObject implements PermissionProvider
 
     /**
      * Renders this block with appropriate templates
-     * looks for templates that match BlockClassName_AreaName
      * falls back to BlockClassName
      * @return string
      **/
     public function forTemplate()
     {
-        if ($this->BlockArea) {
-            $template[] = $this->class . '_' . $this->BlockArea;
-            if (SSViewer::hasTemplate($template)) {
-                return $this->renderWith($template);
-            }
-        }
+        $templates = SSViewer::get_templates_by_class(static::class, '', __CLASS__);
 
-        return $this->renderWith($this->ClassName);
+        return $this->renderWith($templates);
     }
 
 
@@ -392,7 +389,7 @@ class Block extends DataObject implements PermissionProvider
             return $this->controller;
         }
         foreach (array_reverse(ClassInfo::ancestry($this->class)) as $blockClass) {
-            $controllerClass = "{$blockClass}_Controller";
+            $controllerClass = "{$blockClass}Controller";
             if (class_exists($controllerClass)) {
                 break;
             }

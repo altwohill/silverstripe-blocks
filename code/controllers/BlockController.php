@@ -12,7 +12,7 @@ use SilverStripe\Control\Director;
  * @package silverstipe blocks
  * @author Shea Dawson <shea@silverstripe.com.au>
  */
-class Block_Controller extends Controller{
+class BlockController extends Controller{
 
 	/**
 	 * @var Block
