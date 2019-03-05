@@ -2,6 +2,7 @@
 
 namespace Twohill\Legacy\forms;
 
+use SilverStripe\CMS\Controllers\CMSPageEditController;
 use SilverStripe\Forms\GridField\GridFieldConfig;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Control\Controller;
@@ -37,7 +38,7 @@ class GridFieldConfig_BlockManager extends GridFieldConfig{
 		$this->blockManager = Injector::inst()->get(BlockManager::class);
 		$controllerClass = Controller::curr()->class;
 		// Get available Areas (for page) or all in case of ModelAdmin
-		if($controllerClass == 'CMSPageEditController'){
+		if($controllerClass == CMSPageEditController::class){
 			$currentPage = Controller::curr()->currentPage();
 			$areasFieldSource = $this->blockManager->getAreasForPageType($currentPage->ClassName);
 		} else {
@@ -79,7 +80,6 @@ class GridFieldConfig_BlockManager extends GridFieldConfig{
 				'singular_name' => 'Block Type',
 				'Title' => 'Title',
 				'BlockArea' => 'Block Area',
-				'isPublishedNice' => 'Published',
 				'UsageListAsString' => 'Used on'
 			);
 			$dcols->setDisplayFields($displayfields);
@@ -110,10 +110,6 @@ class GridFieldConfig_BlockManager extends GridFieldConfig{
 
 		if($canDelete){
 			$this->addComponent(new GridFieldDeleteAction(true));
-		}
-
-		if($controllerClass == 'BlockAdmin' && class_exists('GridFieldCopyButton')){
-			$this->addComponent(new GridFieldDeleteAction());
 		}
 
 		return $this;
