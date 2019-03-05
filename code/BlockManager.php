@@ -8,6 +8,7 @@ use SilverStripe\Forms\FormField;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\View\SSViewer;
 
 /**
  * BlockManager
@@ -129,11 +130,11 @@ class BlockManager {
      * Get the current/active theme or 'default' to support theme-less sites
      */
     private function getTheme(){
-        $currentTheme = Config::inst()->get('SSViewer', 'theme');
+        $currentTheme = Config::inst()->get(SSViewer::class, 'theme');
 
         // check directly on SiteConfig incase ContentController hasn't set
         // the theme yet in ContentController->init()
-        if(!$currentTheme && class_exists('SiteConfig')){
+        if(!$currentTheme && class_exists(SiteConfig::class)){
     		$currentTheme = SiteConfig::current_site_config()->Theme;
         }
 

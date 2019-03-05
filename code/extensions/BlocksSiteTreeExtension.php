@@ -8,7 +8,6 @@ use SilverStripe\Security\Permission;
 use SilverStripe\Forms\LiteralField;
 use Twohill\Legacy\BlockManager;
 use Twohill\Legacy\dataobjects\Block;
-use Twohill\Legacy\GridFieldConfig_BlockManager;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\ListboxField;
@@ -18,6 +17,7 @@ use SilverStripe\View\SSViewer;
 use SilverStripe\ORM\ArrayList;
 use Twohill\Legacy\dataobjects\BlockSet;
 use SilverStripe\Control\Controller;
+use Twohill\Legacy\forms\GridFieldConfig_BlockManager;
 
 /**
  * BlocksSiteTreeExtension
@@ -71,7 +71,7 @@ class BlocksSiteTreeExtension extends SiteTreeExtension {
 			$gridConfig = GridFieldConfig_BlockManager::create(true, true, true, true)
 				->addExisting($this->owner->class)
 				//->addBulkEditing()
-				->addComponent(new GridFieldOrderableRows())
+				//TODO:->addComponent(new GridFieldOrderableRows())
 				;
 
 			// TODO it seems this sort is not being applied...
