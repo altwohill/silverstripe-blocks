@@ -63,11 +63,11 @@ class Block extends DataObject implements PermissionProvider
         'BlockSets' => BlockSet::class
     );
 
-    private static $summary_fields = array(
-        'singular_name' => 'Block Type',
-        'Title' => 'Title',
-        'UsageListAsString' => 'Used on'
-    );
+//    private static $summary_fields = array(
+//        'singular_name' => 'Block Type',
+//        'Title' => 'Title',
+//        'UsageListAsString' => 'Used on'
+//    );
 
     /**
      * @var array
@@ -93,8 +93,6 @@ class Block extends DataObject implements PermissionProvider
 
     public function getCMSFields()
     {
-        Requirements::add_i18n_javascript(BLOCKS_DIR . '/javascript/lang');
-
         // this line is a temporary patch until I can work out why this dependency isn't being
         // loaded in some cases...
         if (!$this->blockManager) {

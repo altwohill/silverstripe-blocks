@@ -6,6 +6,7 @@ use SilverStripe\CMS\Controllers\CMSPageEditController;
 use SilverStripe\Forms\GridField\GridFieldConfig;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Control\Controller;
+use SilverStripe\Forms\ReadonlyField;
 use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
 use SilverStripe\Forms\DropdownField;
 use Twohill\Legacy\BlockManager;
@@ -49,8 +50,8 @@ class GridFieldConfig_BlockManager extends GridFieldConfig{
 		if($editableRows){
 			$this->addComponent($editable = new GridFieldEditableColumns());
 			$displayfields = array(
-				'singular_name' => array('title' => 'Block Type', 'field' => 'ReadonlyField'),
-				'Title'        	=> array('title' => 'Title', 'field' => 'ReadonlyField'),
+				'singular_name' => array('title' => 'Block Type', 'field' => ReadonlyField::class),
+				'Title'        	=> array('title' => 'Title', 'field' => ReadonlyField::class),
 				'BlockArea'	=> array(
 					'title' => 'Block Area
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
@@ -60,8 +61,7 @@ class GridFieldConfig_BlockManager extends GridFieldConfig{
 								->setHasEmptyDefault(true);
 						}
 				),
-				'isPublishedNice'	=> array('title' => 'Published', 'field' => 'ReadonlyField'),
-				'UsageListAsString' => array('title' => 'Used on', 'field' => 'ReadonlyField'),
+				'UsageListAsString' => array('title' => 'Used on', 'field' => ReadonlyField::class),
 			);
 
 			if($aboveOrBelow){
