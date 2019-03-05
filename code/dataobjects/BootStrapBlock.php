@@ -29,11 +29,6 @@ class BootStrapBlock extends DataObject{
 		'BootStrapRow' => BootStrapRow::class,
 	);
 
-	private static $summary_fields = array(
-		'singular_name' => 'Block Type',
-		'Title' => 'Title',
-		'BootStrapColumnClass' => 'Column Spec'
-	);
 
     private static $default_sort = array('Sort' => 'ASC');
 

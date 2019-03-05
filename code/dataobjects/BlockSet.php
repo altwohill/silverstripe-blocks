@@ -11,10 +11,10 @@ use Symbiote\MultiValueField\Fields\MultiValueCheckboxField;
 use SilverStripe\Forms\TreeMultiselectField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\LiteralField;
-use Twohill\Legacy\GridFieldConfig_BlockManager;
 use SilverStripe\ORM\ArrayLib;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Security\Permission;
+use Twohill\Legacy\forms\GridFieldConfig_BlockManager;
 
 /**
  * BlockSet

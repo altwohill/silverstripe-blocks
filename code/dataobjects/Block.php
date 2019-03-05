@@ -142,7 +142,6 @@ class Block extends DataObject implements PermissionProvider
             _t('SiteTree.ACCESSHEADER', "Who can view this page?")
         );
         $viewerGroupsField = ListboxField::create("ViewerGroups", _t('SiteTree.VIEWERGROUPS', "Viewer Groups"))
-            ->setMultiple(true)
             ->setSource($groupsMap)
             ->setAttribute(
                 'data-placeholder',
